@@ -3,7 +3,6 @@ package com.skillmentor.root.controller;
 
 import com.skillmentor.root.dto.StudentDTO;
 import com.skillmentor.root.service.StudentService;
-import com.skillmentor.root.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +46,7 @@ public class StudentController {
     @PutMapping()
     public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
         StudentDTO student = studentService.updateStudentById(studentDTO);
-        return new ResponseEntity<>(studentDTO, HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
