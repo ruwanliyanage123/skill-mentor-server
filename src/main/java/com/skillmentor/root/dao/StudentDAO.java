@@ -1,15 +1,10 @@
-package com.skillmentor.root.service;
+package com.skillmentor.root.dao;
 
 import com.skillmentor.root.dto.StudentDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Service interface for managing students.
- */
-@Service
-public interface StudentService {
+public interface StudentDAO {
 
     /**
      * Creates a new student.
