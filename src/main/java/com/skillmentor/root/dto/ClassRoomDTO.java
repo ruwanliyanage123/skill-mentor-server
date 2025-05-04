@@ -5,8 +5,6 @@ public class ClassRoomDTO {
     private String title;
     private Double sessionFee;
     private Integer enrolledStudentCount;
-    private Integer mentorId;
-
     public ClassRoomDTO() {
     }
 
@@ -15,7 +13,6 @@ public class ClassRoomDTO {
         this.title = name;
         this.sessionFee = sessionFee;
         this.enrolledStudentCount = enrolledStudentCount;
-        this.mentorId = mentorId;
     }
 
     public Integer getClassRoomId() {
@@ -48,13 +45,5 @@ public class ClassRoomDTO {
 
     public void setEnrolledStudentCount(Integer enrolledStudentCount) {
         this.enrolledStudentCount = enrolledStudentCount;
-    }
-
-    public Integer getMentorId() {
-        return mentorId;
-    }
-
-    public void setMentorId(Integer mentorId) {
-        this.mentorId = mentorId;
     }
 }

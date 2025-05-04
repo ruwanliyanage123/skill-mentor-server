@@ -19,8 +19,8 @@ public class MentorController {
 
     @PostMapping()
     public ResponseEntity<MentorDTO> createMentor(@RequestBody MentorDTO mentorDTO) {
-        mentorService.createMentor(mentorDTO);
-        return new ResponseEntity<>(mentorDTO, HttpStatus.OK);
+        MentorDTO savedDTO = mentorService.createMentor(mentorDTO);
+        return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
     @GetMapping()

@@ -15,15 +15,10 @@ public class ClassRoomEntity {
     private Integer classRoomId;
     @Column(name = "title")
     private String title;
-
     @Column(name = "session_fee")
     private Double sessionFee;
-
     @Column(name = "enrolled_student_count")
     private Integer enrolledStudentCount;
-
-    @Column(name = "mentor_id")
-    private Integer mentorId;
 
     public ClassRoomEntity() {
     }
@@ -33,7 +28,6 @@ public class ClassRoomEntity {
         this.title = name;
         this.sessionFee = sessionFee;
         this.enrolledStudentCount = enrolledStudentCount;
-        this.mentorId = mentorId;
     }
 
     public Integer getClassRoomId() {
@@ -66,13 +60,5 @@ public class ClassRoomEntity {
 
     public void setEnrolledStudentCount(Integer enrolledStudentCount) {
         this.enrolledStudentCount = enrolledStudentCount;
-    }
-
-    public Integer getMentorId() {
-        return mentorId;
-    }
-
-    public void setMentorId(Integer mentorId) {
-        this.mentorId = mentorId;
     }
 }

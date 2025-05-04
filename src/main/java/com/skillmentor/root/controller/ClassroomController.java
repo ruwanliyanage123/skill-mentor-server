@@ -18,8 +18,8 @@ public class ClassroomController {
 
     @PostMapping()
     public ResponseEntity<ClassRoomDTO> createClassroom(@RequestBody ClassRoomDTO classroomDTO) {
-        classroomService.createClassRoom(classroomDTO);
-        return new ResponseEntity<>(classroomDTO, HttpStatus.OK);
+        ClassRoomDTO savedDTO = classroomService.createClassRoom(classroomDTO);
+        return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
     @GetMapping()

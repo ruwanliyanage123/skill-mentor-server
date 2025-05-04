@@ -55,7 +55,6 @@ public class ClassRoomServiceImpl implements ClassRoomService {
         updatedEntity.setTitle(classRoomDTO.getTitle());
         updatedEntity.setSessionFee(classRoomDTO.getSessionFee());
         updatedEntity.setEnrolledStudentCount(classRoomDTO.getEnrolledStudentCount());
-        updatedEntity.setMentorId(classRoomDTO.getMentorId());
         ClassRoomEntity savedEntity = classRoomRepository.save(updatedEntity);
         return ClassRoomEntityDTOMapper.map(savedEntity);
     }
