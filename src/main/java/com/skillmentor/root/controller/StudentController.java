@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1/student")
+@RequestMapping(value = "/student")
 public class StudentController {
 
     @Autowired
@@ -34,9 +34,10 @@ public class StudentController {
     @GetMapping()
     public ResponseEntity<List<StudentDTO>> getAllStudents(
             @RequestParam(required = false) List<String> addresses,
-            @RequestParam(required = false) List<Integer> ages
+            @RequestParam(required = false) List<Integer> ages,
+            @RequestParam(required = false) List<String> firstNames
     ){
-        List<StudentDTO> studentDTOS = studentService.getAllStudents(addresses, ages);
+        List<StudentDTO> studentDTOS = studentService.getAllStudents(addresses, ages, firstNames);
         return new ResponseEntity<>(studentDTOS, HttpStatus.OK);
     }
 

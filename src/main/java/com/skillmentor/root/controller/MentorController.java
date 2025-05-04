@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1/mentor")
+@RequestMapping(value = "/mentor")
 public class MentorController {
 
     @Autowired
@@ -24,10 +24,12 @@ public class MentorController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<MentorDTO>> getAllMentors() {
-        List<MentorDTO> mentorDTOS = mentorService.getAllMentors();
-        return new ResponseEntity<>(mentorDTOS, HttpStatus.OK);
-    }
+    public ResponseEntity<List<MentorDTO>> getAllMentors(
+        @RequestParam(required = false) List<String> firstNames,
+        @RequestParam(required = false) List<String>  subjects) {
+    List<MentorDTO> mentorDTOS = mentorService.getAllMentors(firstNames, subjects);
+    return new ResponseEntity<>(mentorDTOS, HttpStatus.OK);
+}
 
     @GetMapping("/{id}")
     public ResponseEntity<MentorDTO> findMentorById(@PathVariable Integer id) {

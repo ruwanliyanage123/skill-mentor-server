@@ -25,12 +25,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDTO> getAllStudents(List<String> addresses, List<Integer> ages) {
+    public List<StudentDTO> getAllStudents(List<String> addresses, List<Integer> ages, List<String> firstNames) {
         final List<StudentEntity> studentEntities = studentRepository.findAll();
         return studentEntities
                 .stream()
                 .filter(student-> addresses == null || addresses.contains(student.getAddress()))
                 .filter(student-> ages == null || ages.contains(student.getAge()))
+                .filter(student -> firstNames == null || firstNames.contains(student.getFirstName()))
                 .map(StudentEntityDTOMapper::map)
                 .toList();
     }
@@ -38,10 +39,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDTO getStudentById(Integer id) {
         Optional<StudentEntity> studentEntity = studentRepository.findById(id);
-        if(studentEntity.isPresent()){
-            return StudentEntityDTOMapper.map(studentEntity.get());
-        }
-        return null;
+        return studentEntity.map(StudentEntityDTOMapper::map).orElse(null);
     }
 
  @Override
