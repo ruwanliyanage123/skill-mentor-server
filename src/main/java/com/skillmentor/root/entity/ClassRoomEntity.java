@@ -2,12 +2,16 @@ package com.skillmentor.root.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "classroom")
 public class ClassRoomEntity {
-    @Column(name = "classroom_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer classRoomId;
     @Column(name = "title")
     private String title;
