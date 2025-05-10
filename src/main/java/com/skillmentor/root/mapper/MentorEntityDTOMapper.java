@@ -10,6 +10,9 @@ public class MentorEntityDTOMapper {
         mentorDTO.setFirstName(mentorEntity.getFirstName());
         mentorDTO.setLastName(mentorEntity.getLastName());
         mentorDTO.setEmail(mentorEntity.getEmail());
+        mentorDTO.setProfession(mentorEntity.getProfession());
+        mentorDTO.setAddress(mentorEntity.getAddress());
+        mentorDTO.setTitle(mentorEntity.getTitle());
         mentorDTO.setSubject(mentorEntity.getSubject());
         mentorDTO.setQualification(mentorEntity.getQualification());
         return mentorDTO;
@@ -21,6 +24,9 @@ public class MentorEntityDTOMapper {
         mentorEntity.setFirstName(mentorDTO.getFirstName());
         mentorEntity.setLastName(mentorDTO.getLastName());
         mentorEntity.setEmail(mentorDTO.getEmail());
+        mentorEntity.setProfession(mentorDTO.getProfession());
+        mentorEntity.setAddress(mentorDTO.getAddress());
+        mentorEntity.setTitle(mentorDTO.getTitle());
         mentorEntity.setSubject(mentorDTO.getSubject());
         mentorEntity.setQualification(mentorDTO.getQualification());
         return mentorEntity;
