@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 public class MentorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mentor_id")
     private Integer mentorId;
     @Column(name = "first_name")
     private String firstName;
@@ -38,10 +39,13 @@ public class MentorEntity {
     @Column(name = "qualification")
     private String qualification;
 
+    @Column(name = "class_room_id")
+    private Integer classRoomId;
+
     public MentorEntity() {}
 
     public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email,
-                     String title, String profession, String subject, String qualification){
+                     String title, String profession, String subject, String qualification, Integer classRoomId) {
         this.mentorId = mentorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,6 +55,7 @@ public class MentorEntity {
         this.profession = profession;
         this.subject = subject;
         this.qualification = qualification;
+        this.classRoomId = classRoomId;
     }
 
     public Integer getMentorId() {
@@ -123,5 +128,13 @@ public class MentorEntity {
 
     public void setQualification(String qualification) {
         this.qualification = qualification;
+    }
+
+    public void setClassRoomId(Integer classRoomId) {
+        this.classRoomId = classRoomId;
+    }
+
+    public Integer getClassRoomId() {
+        return classRoomId;
     }
 }
