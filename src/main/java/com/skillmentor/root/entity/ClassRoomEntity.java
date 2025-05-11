@@ -1,20 +1,25 @@
 package com.skillmentor.root.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "classroom")
 public class ClassRoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "class_room_id")
     private Integer classRoomId;
     @Column(name = "title")
     private String title;
@@ -22,20 +27,18 @@ public class ClassRoomEntity {
     private Double sessionFee;
     @Column(name = "enrolled_student_count")
     private Integer enrolledStudentCount;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(referencedColumnName = "mentor_id")
-    private MentorEntity mentor;
+    @OneToMany(mappedBy = "classRoomEntity", fetch = FetchType.EAGER)
+    private List<MentorEntity> mentorEntities = new ArrayList<>();
 
     public ClassRoomEntity() {
     }
 
-    public ClassRoomEntity(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, MentorEntity mentor) {
+    public ClassRoomEntity(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, List<MentorEntity> mentorEntities) {
         this.classRoomId = classRoomId;
         this.title = name;
         this.sessionFee = sessionFee;
         this.enrolledStudentCount = enrolledStudentCount;
-        this.mentor = mentor;
+        this.mentorEntities = mentorEntities;
     }
 
     public Integer getClassRoomId() {
@@ -70,11 +73,11 @@ public class ClassRoomEntity {
         this.enrolledStudentCount = enrolledStudentCount;
     }
 
-    public MentorEntity getMentor() {
-        return mentor;
+    public List<MentorEntity> getMentorEntities() {
+        return mentorEntities;
     }
 
-    public void setMentor(MentorEntity mentor) {
-        this.mentor = mentor;
+    public void setMentorEntities(List<MentorEntity> mentorEntities) {
+        this.mentorEntities = mentorEntities;
     }
 }

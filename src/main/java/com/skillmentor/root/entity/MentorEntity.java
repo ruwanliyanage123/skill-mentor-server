@@ -1,11 +1,15 @@
 package com.skillmentor.root.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,13 +43,14 @@ public class MentorEntity {
     @Column(name = "qualification")
     private String qualification;
 
-    @Column(name = "class_room_id")
-    private Integer classRoomId;
+    @ManyToOne()
+    @JoinColumn(name = "class_room_id", referencedColumnName = "class_room_id")
+    private ClassRoomEntity classRoomEntity;
 
     public MentorEntity() {}
 
     public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email,
-                     String title, String profession, String subject, String qualification, Integer classRoomId) {
+                     String title, String profession, String subject, String qualification, ClassRoomEntity classRoomEntity) {
         this.mentorId = mentorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,7 +60,7 @@ public class MentorEntity {
         this.profession = profession;
         this.subject = subject;
         this.qualification = qualification;
-        this.classRoomId = classRoomId;
+        this.classRoomEntity = classRoomEntity;
     }
 
     public Integer getMentorId() {
@@ -130,11 +135,11 @@ public class MentorEntity {
         this.qualification = qualification;
     }
 
-    public void setClassRoomId(Integer classRoomId) {
-        this.classRoomId = classRoomId;
+    public ClassRoomEntity getClassRoomEntity() {
+        return classRoomEntity;
     }
 
-    public Integer getClassRoomId() {
-        return classRoomId;
+    public void setClassRoomEntity(ClassRoomEntity classRoomEntity) {
+        this.classRoomEntity = classRoomEntity;
     }
 }

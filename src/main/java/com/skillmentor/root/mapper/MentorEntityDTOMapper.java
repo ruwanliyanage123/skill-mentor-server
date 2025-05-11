@@ -14,7 +14,6 @@ public class MentorEntityDTOMapper {
         mentorDTO.setAddress(mentorEntity.getAddress());
         mentorDTO.setTitle(mentorEntity.getTitle());
         mentorDTO.setSubject(mentorEntity.getSubject());
-        mentorDTO.setClassRoomId(mentorEntity.getClassRoomId());
         mentorDTO.setQualification(mentorEntity.getQualification());
         return mentorDTO;
     }
@@ -29,7 +28,6 @@ public class MentorEntityDTOMapper {
         mentorEntity.setAddress(mentorDTO.getAddress());
         mentorEntity.setTitle(mentorDTO.getTitle());
         mentorEntity.setSubject(mentorDTO.getSubject());
-        mentorEntity.setClassRoomId(mentorDTO.getClassRoomId());
         mentorEntity.setQualification(mentorDTO.getQualification());
         return mentorEntity;
     }

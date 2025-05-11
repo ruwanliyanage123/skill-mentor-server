@@ -5,6 +5,8 @@ import com.skillmentor.root.dto.MentorDTO;
 import com.skillmentor.root.entity.ClassRoomEntity;
 import com.skillmentor.root.entity.MentorEntity;
 
+import java.util.List;
+
 public class ClassRoomEntityDTOMapper {
     public static ClassRoomDTO map(ClassRoomEntity classroomEntity) {
         ClassRoomDTO classroomDTO = new ClassRoomDTO();
@@ -12,10 +14,6 @@ public class ClassRoomEntityDTOMapper {
         classroomDTO.setTitle(classroomEntity.getTitle());
         classroomDTO.setSessionFee(classroomEntity.getSessionFee());
         classroomDTO.setEnrolledStudentCount(classroomEntity.getEnrolledStudentCount());
-        if (classroomEntity.getMentor() != null) {
-            MentorDTO mentorDTO = MentorEntityDTOMapper.map(classroomEntity.getMentor());
-            classroomDTO.setMentor(mentorDTO);
-        }
         return classroomDTO;
     }
 
@@ -25,10 +23,6 @@ public class ClassRoomEntityDTOMapper {
         classroomEntity.setTitle(classroomDTO.getTitle());
         classroomEntity.setSessionFee(classroomDTO.getSessionFee());
         classroomEntity.setEnrolledStudentCount(classroomDTO.getEnrolledStudentCount());
-        if (classroomDTO.getMentor() != null) {
-            MentorEntity mentorEntity = MentorEntityDTOMapper.map(classroomDTO.getMentor());
-            classroomEntity.setMentor(mentorEntity);
-        }
         return classroomEntity;
     }
 }

@@ -1,20 +1,30 @@
 package com.skillmentor.root.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClassRoomDTO {
+    @JsonProperty("id")
     private Integer classRoomId;
+    @JsonProperty("title")
     private String title;
+    @JsonProperty("fee")
     private Double sessionFee;
+    @JsonProperty("studentCount")
     private Integer enrolledStudentCount;
-    private MentorDTO mentorDTO;
+    @JsonProperty("mentors")
+    private List<MentorDTO> mentorDTOList = new ArrayList<>();
     public ClassRoomDTO() {
     }
 
-    public ClassRoomDTO(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, MentorDTO mentorId) {
+    public ClassRoomDTO(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, List<MentorDTO> mentorDTOList) {
         this.classRoomId = classRoomId;
         this.title = name;
         this.sessionFee = sessionFee;
         this.enrolledStudentCount = enrolledStudentCount;
-        this.mentorDTO = mentorId;
+        this.mentorDTOList = mentorDTOList;
     }
 
     public Integer getClassRoomId() {
@@ -49,11 +59,11 @@ public class ClassRoomDTO {
         this.enrolledStudentCount = enrolledStudentCount;
     }
 
-    public MentorDTO getMentor() {
-        return mentorDTO;
+    public void setMentorDTOList(List<MentorDTO> mentorDTOList) {
+        this.mentorDTOList = mentorDTOList;
     }
 
-    public void setMentor(MentorDTO mentorId) {
-        this.mentorDTO = mentorId;
+    public List<MentorDTO> getMentorDTOList() {
+        return mentorDTOList;
     }
 }
