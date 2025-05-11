@@ -23,17 +23,7 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 
     @Override
     public List<ClassRoomDTO> getAllClassRooms() {
-        List<ClassRoomEntity> classRoomEntities = classRoomRepository.findAll();
-        return classRoomEntities.stream().map(
-                entity->{
-                    ClassRoomDTO classRoomDTO = ClassRoomEntityDTOMapper.map(entity);
-                    List<MentorDTO> mentorDTOS = entity.getMentorEntities().stream()
-                            .map(MentorEntityDTOMapper::map)
-                            .collect(Collectors.toList());
-                    classRoomDTO.setMentorDTOList(mentorDTOS);
-                    return classRoomDTO;
-                }
-        ).collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -71,21 +61,6 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 
     @Override
     public ClassRoomDTO createClassRoom(ClassRoomDTO classRoomDTO) {
-        ClassRoomEntity classRoomEntity = ClassRoomEntityDTOMapper.map(classRoomDTO);
-        if (classRoomDTO.getMentorDTOList().size()>0) {
-            List<MentorEntity> mentorEntities = classRoomDTO.getMentorDTOList().stream()
-                    .map(MentorEntityDTOMapper::map)
-                    .collect(Collectors.toList());
-            classRoomEntity.setMentorEntities(mentorEntities);
-        }
-        ClassRoomEntity savedEntity = classRoomRepository.save(classRoomEntity);
-        ClassRoomDTO returnedClassRoomDTO = ClassRoomEntityDTOMapper.map(savedEntity);
-        if (savedEntity.getMentorEntities().size()>0) {
-            List<MentorDTO> mentorDTOS = savedEntity.getMentorEntities().stream()
-                    .map(MentorEntityDTOMapper::map)
-                    .collect(Collectors.toList());
-            returnedClassRoomDTO.setMentorDTOList(mentorDTOS);
-        }
-        return ClassRoomEntityDTOMapper.map(savedEntity);
+        return null;
     }
 }

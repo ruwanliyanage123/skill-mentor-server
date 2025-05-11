@@ -26,38 +26,12 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public MentorDTO createMentor(MentorDTO mentorDTO) {
-        MentorEntity mentorEntity = MentorEntityDTOMapper.map(mentorDTO);
-        if (mentorDTO.getClassRoomIds().size()>0) {
-            List<ClassRoomEntity> classRoomEntities = classRoomRepository.findAllById(mentorDTO.getClassRoomIds());
-            if (classRoomEntities.size()>0) {
-                mentorEntity.setClassRoomEntities(classRoomEntities);
-            }
-        }
-        MentorEntity savedEntity = mentorRepository.save(mentorEntity);
-        MentorDTO savedMentorDTO = MentorEntityDTOMapper.map(savedEntity);
-        if(savedEntity.getClassRoomEntities().size()>0) {
-            List<ClassRoomDTO> savedDTOs = savedEntity.getClassRoomEntities().stream().map(ClassRoomEntityDTOMapper::map).toList();
-            savedMentorDTO.setClassRoomDTOList(savedDTOs);
-            for(ClassRoomDTO classRoomDTO : savedMentorDTO.getClassRoomDTOList()) {
-                ClassRoomEntity classRoomEntity = classRoomRepository.findById(classRoomDTO.getClassRoomId()).orElse(null);
-                if (classRoomEntity != null) {
-                    classRoomEntity.getMentorEntities().add(savedEntity);
-                    classRoomRepository.save(classRoomEntity);
-                }
-            }
-        }
-        return savedMentorDTO;
+        return null;
     }
 
     @Override
     public List<MentorDTO> getAllMentors(List<String> firstNames, List<String> subjects) {
-        List<MentorEntity> mentorEntities = mentorRepository.findAll();
-        return mentorEntities.stream().map(entity->{
-            List<ClassRoomDTO> classRoomDTOS = entity.getClassRoomEntities().stream().map(ClassRoomEntityDTOMapper::map).toList();
-            MentorDTO mentorDTO = MentorEntityDTOMapper.map(entity);
-            mentorDTO.setClassRoomDTOList(classRoomDTOS);
-            return mentorDTO;
-        }).toList();
+        return null;
     }
 
     @Override
