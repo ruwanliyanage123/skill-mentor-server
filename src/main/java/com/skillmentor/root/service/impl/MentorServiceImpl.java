@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MentorServiceImpl implements MentorService {
@@ -29,30 +27,37 @@ public class MentorServiceImpl implements MentorService {
     @Override
     public MentorDTO createMentor(MentorDTO mentorDTO) {
         MentorEntity mentorEntity = MentorEntityDTOMapper.map(mentorDTO);
-        if (mentorDTO.getClassRoomId() != null) {
-            Optional<ClassRoomEntity> optionalClassRoomEntity = classRoomRepository.findById(mentorDTO.getClassRoomId());
-            if (optionalClassRoomEntity.isPresent()) {
-                ClassRoomEntity classRoomEntity = optionalClassRoomEntity.get();
-                mentorEntity.setClassRoomEntity(classRoomEntity);
-                ClassRoomDTO classRoomDTO = ClassRoomEntityDTOMapper.map(classRoomEntity);
-                classRoomDTO.getMentorDTOList().add(mentorDTO);
+        if (mentorDTO.getClassRoomIds().size()>0) {
+            List<ClassRoomEntity> classRoomEntities = classRoomRepository.findAllById(mentorDTO.getClassRoomIds());
+            if (classRoomEntities.size()>0) {
+                mentorEntity.setClassRoomEntities(classRoomEntities);
             }
         }
         MentorEntity savedEntity = mentorRepository.save(mentorEntity);
         MentorDTO savedMentorDTO = MentorEntityDTOMapper.map(savedEntity);
-        savedMentorDTO.setClassRoomDTO(mentorDTO.getClassRoomDTO());
-        savedMentorDTO.setClassRoomId(mentorDTO.getClassRoomId());
+        if(savedEntity.getClassRoomEntities().size()>0) {
+            List<ClassRoomDTO> savedDTOs = savedEntity.getClassRoomEntities().stream().map(ClassRoomEntityDTOMapper::map).toList();
+            savedMentorDTO.setClassRoomDTOList(savedDTOs);
+            for(ClassRoomDTO classRoomDTO : savedMentorDTO.getClassRoomDTOList()) {
+                ClassRoomEntity classRoomEntity = classRoomRepository.findById(classRoomDTO.getClassRoomId()).orElse(null);
+                if (classRoomEntity != null) {
+                    classRoomEntity.getMentorEntities().add(savedEntity);
+                    classRoomRepository.save(classRoomEntity);
+                }
+            }
+        }
         return savedMentorDTO;
     }
 
     @Override
     public List<MentorDTO> getAllMentors(List<String> firstNames, List<String> subjects) {
         List<MentorEntity> mentorEntities = mentorRepository.findAll();
-        return mentorEntities.stream()
-                .filter(mentor -> firstNames == null || firstNames.isEmpty() || firstNames.contains(mentor.getFirstName()))
-                .filter(mentor -> subjects == null || subjects.isEmpty() || subjects.contains(mentor.getSubject()))
-                .map(MentorEntityDTOMapper::map)
-                .collect(Collectors.toList());
+        return mentorEntities.stream().map(entity->{
+            List<ClassRoomDTO> classRoomDTOS = entity.getClassRoomEntities().stream().map(ClassRoomEntityDTOMapper::map).toList();
+            MentorDTO mentorDTO = MentorEntityDTOMapper.map(entity);
+            mentorDTO.setClassRoomDTOList(classRoomDTOS);
+            return mentorDTO;
+        }).toList();
     }
 
     @Override
@@ -63,29 +68,6 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public MentorDTO updateMentorById(MentorDTO mentorDTO) {
-        Optional<MentorEntity> mentorEntityOptional = mentorRepository.findById(mentorDTO.getMentorId());
-        if (mentorEntityOptional.isPresent()) {
-            MentorEntity mentorEntity = mentorEntityOptional.get();
-            mentorEntity.setFirstName(mentorDTO.getFirstName());
-            mentorEntity.setLastName(mentorDTO.getLastName());
-            mentorEntity.setEmail(mentorDTO.getEmail());
-            mentorEntity.setProfession(mentorDTO.getProfession());
-            mentorEntity.setAddress(mentorDTO.getAddress());
-            mentorEntity.setTitle(mentorDTO.getTitle());
-            mentorEntity.setSubject(mentorDTO.getSubject());
-            mentorEntity.setQualification(mentorDTO.getQualification());
-
-            ClassRoomEntity classRoomEntity = null;
-            if (mentorDTO.getClassRoomId() != null) {
-                Optional<ClassRoomEntity> optionalClassRoomEntity = classRoomRepository.findById(mentorDTO.getClassRoomId());
-                if (optionalClassRoomEntity.isPresent()) {
-                    classRoomEntity = optionalClassRoomEntity.get();
-                }
-            }
-            mentorEntity.setClassRoomEntity(classRoomEntity);
-            MentorEntity updatedMentor = mentorRepository.save(mentorEntity);
-            return MentorEntityDTOMapper.map(updatedMentor);
-        }
         return null;
     }
 

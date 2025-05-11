@@ -2,6 +2,9 @@ package com.skillmentor.root.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MentorDTO {
     private Integer mentorId;
     private String firstName;
@@ -12,14 +15,13 @@ public class MentorDTO {
     private String profession;
     private String subject;
     private String qualification;
-    @JsonIgnore
-    private ClassRoomDTO classRoomDTO;
-    private Integer classRoomId;
+    private List<ClassRoomDTO> classRoomDTOList;
+    private List<Integer> classRoomIds = new ArrayList<>();
 
     public MentorDTO() {}
 
     public MentorDTO(Integer mentorId, String firstName, String lastName, String address, String email,
-                     String title, String profession, String subject, String qualification, ClassRoomDTO classRoomDTO, Integer classRoomId) {
+                     String title, String profession, String subject, String qualification, List<ClassRoomDTO> classRoomDTOList, List<Integer> classRoomIds) {
         this.mentorId = mentorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,8 +31,8 @@ public class MentorDTO {
         this.profession = profession;
         this.subject = subject;
         this.qualification = qualification;
-        this.classRoomDTO = classRoomDTO;
-        this.classRoomId = classRoomId;
+        this.classRoomDTOList = classRoomDTOList;
+        this.classRoomIds = classRoomIds;
     }
 
     public Integer getMentorId() {
@@ -105,19 +107,19 @@ public class MentorDTO {
         this.qualification = qualification;
     }
 
-    public void setClassRoomDTO(ClassRoomDTO classRoomDTO) {
-        this.classRoomDTO = classRoomDTO;
+    public void setClassRoomDTOList(List<ClassRoomDTO> classRoomDTOList) {
+        this.classRoomDTOList = classRoomDTOList;
     }
 
-    public ClassRoomDTO getClassRoomDTO() {
-        return classRoomDTO;
+    public List<ClassRoomDTO> getClassRoomDTOList() {
+        return classRoomDTOList;
     }
 
-    public Integer getClassRoomId() {
-        return classRoomId;
+    public List<Integer> getClassRoomIds() {
+        return classRoomIds;
     }
 
-    public void setClassRoomId(Integer classRoomId) {
-        this.classRoomId = classRoomId;
+    public void setClassRoomIds(List<Integer> classRoomIds) {
+        this.classRoomIds = classRoomIds;
     }
 }
