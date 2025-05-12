@@ -7,16 +7,18 @@ public class SessionLiteDTO {
     private Integer studentId;
     private Integer classRoomId;
     private Integer mentorId;
+    private String topic;
     private Instant startTime;
     private Instant endTime;
 
-    public SessionLiteDTO(Integer sessionId, Integer studentId, Integer classRoomId, Integer mentorId, Instant startTime, Instant endTime) {
+    public SessionLiteDTO(Integer sessionId, Integer studentId, Integer classRoomId, Integer mentorId, Instant startTime, Instant endTime, String topic) {
         this.sessionId = sessionId;
         this.studentId = studentId;
         this.classRoomId = classRoomId;
         this.mentorId = mentorId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.topic = topic;
     }
 
     public SessionLiteDTO(){}
@@ -67,5 +69,13 @@ public class SessionLiteDTO {
 
     public void setEndTime(Instant endTime) {
         this.endTime = endTime;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

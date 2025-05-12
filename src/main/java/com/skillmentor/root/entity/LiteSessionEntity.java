@@ -23,18 +23,21 @@ public class LiteSessionEntity {
     private Integer classRoomId;
     @Column(name = "mentor_id")
     private Integer mentorId;
+    @Column(name = "topic")
+    private String topic;
     @Column(name = "start_time")
     private Instant startTime;
     @Column(name = "end_time")
     private Instant endTime;
 
-    public LiteSessionEntity(Integer sessionId, Integer studentId, Integer classRoomId, Integer mentorId, Instant startTime, Instant endTime) {
+    public LiteSessionEntity(Integer sessionId, Integer studentId, Integer classRoomId, Integer mentorId, Instant startTime, Instant endTime, String topic) {
         this.sessionId = sessionId;
         this.studentId = studentId;
         this.classRoomId = classRoomId;
         this.mentorId = mentorId;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.topic = topic;
     }
 
     public LiteSessionEntity(){}
@@ -85,5 +88,13 @@ public class LiteSessionEntity {
 
     public void setEndTime(Instant endTime) {
         this.endTime = endTime;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

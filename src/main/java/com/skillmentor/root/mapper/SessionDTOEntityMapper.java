@@ -14,6 +14,7 @@ public class SessionDTOEntityMapper {
         sessionEntity.setStudentEntity(StudentEntityDTOMapper.map(sessionDTO.getStudentDTO()));
         sessionEntity.setClassRoomEntity(ClassRoomEntityDTOMapper.map(sessionDTO.getClassRoomDTO()));
         sessionEntity.setMentorEntity(MentorEntityDTOMapper.map(sessionDTO.getMentorDTO()));
+        sessionEntity.setTopic(sessionDTO.getTopic());
         sessionEntity.setStartTime(sessionDTO.getStartTime());
         sessionEntity.setEndTime(sessionDTO.getEndTime());
         return sessionEntity;
@@ -28,6 +29,7 @@ public class SessionDTOEntityMapper {
         sessionDTO.setStudentDTO(StudentEntityDTOMapper.map(sessionEntity.getStudentEntity()));
         sessionDTO.setClassRoomDTO(ClassRoomEntityDTOMapper.map(sessionEntity.getClassRoomEntity()));
         sessionDTO.setMentorDTO(MentorEntityDTOMapper.map(sessionEntity.getMentorEntity()));
+        sessionDTO.setTopic(sessionEntity.getTopic());
         sessionDTO.setStartTime(sessionEntity.getStartTime());
         sessionDTO.setEndTime(sessionEntity.getEndTime());
         return sessionDTO;

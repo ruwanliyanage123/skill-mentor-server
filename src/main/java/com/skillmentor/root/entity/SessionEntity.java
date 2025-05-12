@@ -28,18 +28,21 @@ public class SessionEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mentor_id", referencedColumnName = "mentor_id")
     private MentorEntity mentorEntity;
+    @Column(name = "topic")
+    private String topic;
     @Column(name ="start_time")
     private Instant startTime;
     @Column(name = "end_time")
     private Instant endTime;
 
-    public SessionEntity(Integer sessionId, StudentEntity studentEntity, ClassRoomEntity classRoomEntity, MentorEntity mentorEntity, Instant startTime, Instant endTime) {
+    public SessionEntity(Integer sessionId, StudentEntity studentEntity, ClassRoomEntity classRoomEntity, MentorEntity mentorEntity, Instant startTime, Instant endTime, String topic) {
         this.sessionId = sessionId;
         this.studentEntity = studentEntity;
         this.classRoomEntity = classRoomEntity;
         this.mentorEntity = mentorEntity;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.topic = topic;
     }
 
     public SessionEntity(){
@@ -92,5 +95,13 @@ public class SessionEntity {
 
     public void setEndTime(Instant endTime) {
         this.endTime = endTime;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getTopic() {
+        return topic;
     }
 }
