@@ -2,16 +2,24 @@ package com.skillmentor.root.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
 public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id")
     private Integer studentId;
     @Column(name = "first_name")
     private String firstName;
@@ -25,8 +33,10 @@ public class StudentEntity {
     private String address;
     @Column(name = "age")
     private Integer age;
+    @OneToMany(mappedBy = "studentEntity", fetch = FetchType.EAGER)
+    private List<SessionEntity> sessionEntityList = new ArrayList<>();
 
-    public StudentEntity(Integer studentId, String firstName, String lastName, String email, String phoneNumber, String address, Integer age) {
+    public StudentEntity(Integer studentId, String firstName, String lastName, String email, String phoneNumber, String address, Integer age, List<SessionEntity> sessionEntityList) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,6 +44,7 @@ public class StudentEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.age = age;
+        this.sessionEntityList = sessionEntityList;
     }
 
     public StudentEntity() {
@@ -94,5 +105,13 @@ public class StudentEntity {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public void setSessionEntityList(List<SessionEntity> sessionEntityList) {
+        this.sessionEntityList = sessionEntityList;
+    }
+
+    public List<SessionEntity> getSessionEntityList() {
+        return sessionEntityList;
     }
 }

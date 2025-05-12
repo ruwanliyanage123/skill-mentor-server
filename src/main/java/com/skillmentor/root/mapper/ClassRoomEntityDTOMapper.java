@@ -8,7 +8,6 @@ public class ClassRoomEntityDTOMapper {
         ClassRoomDTO classroomDTO = new ClassRoomDTO();
         classroomDTO.setClassRoomId(classroomEntity.getClassRoomId());
         classroomDTO.setTitle(classroomEntity.getTitle());
-        classroomDTO.setSessionFee(classroomEntity.getSessionFee());
         classroomDTO.setEnrolledStudentCount(classroomEntity.getEnrolledStudentCount());
         return classroomDTO;
     }
@@ -17,7 +16,6 @@ public class ClassRoomEntityDTOMapper {
         ClassRoomEntity classroomEntity = new ClassRoomEntity();
         classroomEntity.setClassRoomId(classroomDTO.getClassRoomId());
         classroomEntity.setTitle(classroomDTO.getTitle());
-        classroomEntity.setSessionFee(classroomDTO.getSessionFee());
         classroomEntity.setEnrolledStudentCount(classroomDTO.getEnrolledStudentCount());
         return classroomEntity;
     }
