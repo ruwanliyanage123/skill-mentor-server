@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface SessionService {
-    public abstract SessionDTO createSession(SessionLiteDTO sessionDTO);
+    public abstract SessionLiteDTO createSession(SessionLiteDTO sessionDTO);
 
     public abstract List<SessionDTO> getAllSessions();
 }

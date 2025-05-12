@@ -20,8 +20,8 @@ public class SessionController {
     @Autowired
     private SessionService sessionService;
     @PostMapping()
-    public ResponseEntity<SessionDTO> createSession(@RequestBody SessionLiteDTO sessionDTO){
-        final SessionDTO savedDTO = sessionService.createSession(sessionDTO);
+    public ResponseEntity<SessionLiteDTO> createSession(@RequestBody SessionLiteDTO sessionDTO){
+        final SessionLiteDTO savedDTO = sessionService.createSession(sessionDTO);
         return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
