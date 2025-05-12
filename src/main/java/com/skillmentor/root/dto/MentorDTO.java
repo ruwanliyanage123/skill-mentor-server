@@ -7,6 +7,7 @@ public class MentorDTO {
     private String address;
     private String email;
     private String title;
+    private Double sessionFee;
     private String profession;
     private String subject;
     private String phoneNumber;
@@ -15,7 +16,7 @@ public class MentorDTO {
 
     public MentorDTO() {}
 
-    public MentorDTO(Integer mentorId, String firstName, String lastName, String address, String email,
+    public MentorDTO(Integer mentorId, String firstName, String lastName, String address, String email, String sessionFee,
                      String title, String profession, String subject, String qualification, Integer classRoomId, String phoneNumber) {
         this.mentorId = mentorId;
         this.firstName = firstName;
@@ -28,6 +29,7 @@ public class MentorDTO {
         this.qualification = qualification;
         this.classRoomId = classRoomId;
         this.phoneNumber = phoneNumber;
+        this.sessionFee = Double.parseDouble(sessionFee);
     }
 
     public Integer getMentorId() {
@@ -116,5 +118,13 @@ public class MentorDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Double getSessionFee() {
+        return sessionFee;
+    }
+
+    public void setSessionFee(Double sessionFee) {
+        this.sessionFee = sessionFee;
     }
 }
