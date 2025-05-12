@@ -22,7 +22,7 @@ public interface MentorService {
      *
      * @return a list of MentorDTO objects representing all mentors
      */
-    List<MentorDTO> getAllMentors();
+    List<MentorDTO> getAllMentors(List<String> firstNames, List<String> subjects);
 
     /**
      * Retrieves a mentor by their ID.

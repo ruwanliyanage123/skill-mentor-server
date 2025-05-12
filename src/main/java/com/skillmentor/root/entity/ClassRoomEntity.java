@@ -1,14 +1,29 @@
-package com.skillmentor.root.dto;
+package com.skillmentor.root.entity;
 
-public class ClassRoomDTO {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "classroom")
+public class ClassRoomEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer classRoomId;
+    @Column(name = "title")
     private String title;
+    @Column(name = "session_fee")
     private Double sessionFee;
+    @Column(name = "enrolled_student_count")
     private Integer enrolledStudentCount;
-    public ClassRoomDTO() {
+
+    public ClassRoomEntity() {
     }
 
-    public ClassRoomDTO(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, Integer mentorId) {
+    public ClassRoomEntity(Integer classRoomId, String name, Double sessionFee, Integer enrolledStudentCount, Integer mentorId) {
         this.classRoomId = classRoomId;
         this.title = name;
         this.sessionFee = sessionFee;

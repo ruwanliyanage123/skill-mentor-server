@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1/classroom")
+@RequestMapping(value = "/classroom")
 public class ClassroomController {
 
     @Autowired
@@ -18,8 +18,8 @@ public class ClassroomController {
 
     @PostMapping()
     public ResponseEntity<ClassRoomDTO> createClassroom(@RequestBody ClassRoomDTO classroomDTO) {
-        classroomService.createClassRoom(classroomDTO);
-        return new ResponseEntity<>(classroomDTO, HttpStatus.OK);
+        ClassRoomDTO savedDTO = classroomService.createClassRoom(classroomDTO);
+        return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
     @GetMapping()
