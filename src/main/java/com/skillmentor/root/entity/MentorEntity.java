@@ -3,10 +3,15 @@ package com.skillmentor.root.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "mentor")
@@ -39,10 +44,13 @@ public class MentorEntity {
     @Column(name = "qualification")
     private String qualification;
 
+    @OneToMany(mappedBy = "mentorEntity", fetch = FetchType.EAGER)
+    private List<SessionEntity> sessionEntityList = new ArrayList<>();
+
     public MentorEntity() {}
 
     public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email,
-                     String title, String profession, String subject, String qualification){
+                     String title, String profession, String subject, String qualification, List<SessionEntity> sessionEntityList){
         this.mentorId = mentorId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,6 +60,7 @@ public class MentorEntity {
         this.profession = profession;
         this.subject = subject;
         this.qualification = qualification;
+        this.sessionEntityList = sessionEntityList;
     }
 
     public Integer getMentorId() {
@@ -124,5 +133,13 @@ public class MentorEntity {
 
     public void setQualification(String qualification) {
         this.qualification = qualification;
+    }
+
+    public void setSessionEntityList(List<SessionEntity> sessionEntityList) {
+        this.sessionEntityList = sessionEntityList;
+    }
+
+    public List<SessionEntity> getSessionEntityList() {
+        return sessionEntityList;
     }
 }
