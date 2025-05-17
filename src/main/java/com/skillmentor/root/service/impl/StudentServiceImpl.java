@@ -7,6 +7,9 @@ import com.skillmentor.root.mapper.StudentEntityDTOMapper;
 import com.skillmentor.root.repository.StudentRepository;
 import com.skillmentor.root.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,7 @@ public class StudentServiceImpl implements StudentService {
     StudentRepository studentRepository;
 
     @Override
+    @CacheEvict(value = {"studentCache", "allStudentsCache"}, allEntries = true)
     public StudentDTO createStudent(final StudentDTO studentDTO) {
         if (studentDTO == null) {
             throw new IllegalArgumentException("Student data must not be null.");
@@ -27,6 +31,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Cacheable(value = "allStudentsCache", key = "'allStudents'")
     public List<StudentDTO> getAllStudents(final List<String> addresses, final List<Integer> ages, final List<String> firstNames) {
         final List<StudentEntity> studentEntities = studentRepository.findAll();
         return studentEntities
@@ -39,6 +44,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Cacheable(value = "studentCache", key = "#id")
     public StudentDTO findStudentById(final Integer id){
         return studentRepository.findById(id)
                 .map(StudentEntityDTOMapper::map)
@@ -46,6 +52,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @CachePut(value = "studentCache", key = "#studentDTO.studentId")
+    @CacheEvict(value = "allStudentsCache", allEntries = true)
     public StudentDTO updateStudentById(final StudentDTO studentDTO){
         if (studentDTO == null || studentDTO.getStudentId() == null) {
             throw new IllegalArgumentException("Student ID must not be null for update.");
@@ -62,6 +70,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @CacheEvict(value = {"studentCache", "allStudentsCache"}, key = "#id")
     public StudentDTO deleteStudentById(final Integer id){
         final StudentEntity studentEntity = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentException("Cannot delete. Student not found with ID: " + id));
