@@ -26,7 +26,7 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
-    public MentorDTO createMentor(MentorDTO mentorDTO) {
+    public MentorDTO createMentor(MentorDTO mentorDTO) throws MentorException {
         final MentorEntity mentorEntity = MentorEntityDTOMapper.map(mentorDTO);
         if (mentorDTO.getClassRoomId() != null) {
             final ClassRoomEntity classRoomEntity = classRoomRepository.findById(mentorDTO.getClassRoomId())
@@ -50,14 +50,14 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
-    public MentorDTO findMentorById(Integer id) {
+    public MentorDTO findMentorById(Integer id) throws MentorException {
         return mentorRepository.findById(id)
                 .map(MentorEntityDTOMapper::map)
                 .orElseThrow(() -> new MentorException("Mentor not found with ID: " + id));
     }
 
     @Override
-    public MentorDTO updateMentorById(MentorDTO mentorDTO) {
+    public MentorDTO updateMentorById(MentorDTO mentorDTO) throws MentorException {
        final MentorEntity mentorEntity = mentorRepository.findById(mentorDTO.getMentorId())
                 .orElseThrow(() -> new MentorException("Cannot update. Mentor not found with ID: " + mentorDTO.getMentorId()));
         mentorEntity.setFirstName(mentorDTO.getFirstName());
@@ -75,7 +75,7 @@ public class MentorServiceImpl implements MentorService {
     }
 
     @Override
-    public MentorDTO deleteMentorById(Integer id) {
+    public MentorDTO deleteMentorById(Integer id) throws MentorException {
         final MentorEntity mentorEntity = mentorRepository.findById(id)
                 .orElseThrow(() -> new MentorException("Cannot delete. Mentor not found with ID: " + id));
         mentorRepository.deleteById(id);
