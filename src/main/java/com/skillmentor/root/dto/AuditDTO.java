@@ -13,49 +13,48 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuditDTO {
-    @NotNull
     @JsonProperty("session_id")
     private Integer sessionId;
-    @NotNull
+    @NotNull(message = "Student ID must not be null")
     @JsonProperty("student_id")
     private Integer studentId;
-    @NotBlank
+    @NotBlank(message = "Student first name must not be blank")
     @JsonProperty("student_first_name")
     private String studentFirstName;
-    @NotBlank
+    @NotBlank(message = "Student last name must not be blank")
     @JsonProperty("student_last_name")
     private String studentLastName;
-    @NotBlank
+    @NotBlank(message = "Student email must not be blank")
     @JsonProperty("student_email")
     private String studentEmail;
-    @NotBlank
+    @NotBlank(message = "Student phone number must not be blank")
     @JsonProperty("student_phone_number")
     private String studentPhoneNumber;
-    @NotBlank
+    @NotBlank(message = "Class title must not be blank")
     @JsonProperty("class_title")
     private String classTitle;
-    @NotNull
+    @NotNull(message = "Mentor ID must not be null")
     @JsonProperty("mentor_id")
     private Integer mentorId;
-    @NotBlank
+    @NotBlank(message = "Mentor first name must not be blank")
     @JsonProperty("mentor_first_name")
     private String mentorFirstName;
-    @NotBlank
+    @NotBlank(message = "Mentor last name must not be blank")
     @JsonProperty("mentor_last_name")
     private String mentorLastName;
-    @NotBlank
+    @NotBlank(message = "Mentor phone number must not be blank")
     @JsonProperty("mentor_phone_number")
     private String mentorPhoneNumber;
-    @NotNull
+    @NotNull(message = "Fee must not be null")
     @JsonProperty("fee")
     private Double fee;
-    @NotNull
+    @NotNull(message = "Start time must not be null")
     @JsonProperty("start_time")
     private Instant startTime;
-    @NotNull
+    @NotNull(message = "End time must not be null")
     @JsonProperty("end_time")
     private Instant endTime;
-    @NotBlank
+    @NotBlank(message = "Topic must not be blank")
     @JsonProperty("topic")
     private String topic;
 }

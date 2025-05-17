@@ -12,14 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDTO {
-    @NotNull
     @JsonProperty("mentor_id")
     private Integer mentorId;
-    @NotBlank
+    @NotBlank(message = "Mentor name must not be blank")
     @JsonProperty("mentor_name")
     private String mentorName;
-    @NotNull
-    @Min(0)
+    @NotNull(message = "Total fee must not be null")
+    @Min(value = 0, message = "Total fee must be zero or positive")
     @JsonProperty("total_fee")
     private Double totalFee;
 }

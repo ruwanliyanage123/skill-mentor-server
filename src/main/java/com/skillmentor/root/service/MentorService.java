@@ -30,7 +30,7 @@ public interface MentorService {
      * @param id the ID of the mentor to retrieve
      * @return a MentorDTO object representing the mentor
      */
-    MentorDTO getMentorById(Integer id);
+    MentorDTO findMentorById(Integer id);
 
     /**
      * Updates an existing mentor's details.

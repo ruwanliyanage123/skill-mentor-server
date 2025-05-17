@@ -1,51 +1,55 @@
 package com.skillmentor.root.controller;
 
-
+import com.skillmentor.root.common.Constants;
 import com.skillmentor.root.dto.MentorDTO;
 import com.skillmentor.root.service.MentorService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
-@RequestMapping(value = "/mentor")
+@RequestMapping(value = "/academic")
 public class MentorController {
 
     @Autowired
     private MentorService mentorService;
 
-    @PostMapping()
-    public ResponseEntity<MentorDTO> createMentor(@RequestBody MentorDTO mentorDTO) {
-        MentorDTO savedDTO = mentorService.createMentor(mentorDTO);
-        return new ResponseEntity<>(savedDTO, HttpStatus.OK);
+    public MentorController() {
     }
 
-    @GetMapping()
-    public ResponseEntity<List<MentorDTO>> getAllMentors(
-        @RequestParam(required = false) List<String> firstNames,
-        @RequestParam(required = false) List<String>  subjects) {
-    List<MentorDTO> mentorDTOS = mentorService.getAllMentors(firstNames, subjects);
-    return new ResponseEntity<>(mentorDTOS, HttpStatus.OK);
-}
-
-    @GetMapping("/{id}")
-    public ResponseEntity<MentorDTO> findMentorById(@PathVariable Integer id) {
-        MentorDTO mentor = mentorService.getMentorById(id);
-        return new ResponseEntity<>(mentor, HttpStatus.OK);
+    @PostMapping(value = "/mentor", consumes = Constants.APPLICATION_JSON, produces = Constants.APPLICATION_JSON)
+    public ResponseEntity<MentorDTO> createMentor(@Valid @RequestBody MentorDTO mentorDTO) {
+        final MentorDTO savedDTO = mentorService.createMentor(mentorDTO);
+        return ResponseEntity.ok(savedDTO);
     }
 
-    @PutMapping()
-    public ResponseEntity<MentorDTO> updateMentor(@RequestBody MentorDTO mentorDTO) {
-        MentorDTO mentor = mentorService.updateMentorById(mentorDTO);
-        return new ResponseEntity<>(mentor, HttpStatus.OK);
+    @GetMapping(value = "/mentor", produces = Constants.APPLICATION_JSON)
+    public ResponseEntity<List<MentorDTO>> getAllMentors(@RequestParam(required = false) List<String> firstNames, @RequestParam(required = false) List<String> subjects) {
+        final List<MentorDTO> mentorDTOS = mentorService.getAllMentors(firstNames, subjects);
+        return ResponseEntity.ok(mentorDTOS);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<MentorDTO> deleteMentor(@PathVariable Integer id) {
-        MentorDTO mentor = mentorService.deleteMentorById(id);
-        return new ResponseEntity<>(mentor, HttpStatus.OK);
+    @GetMapping(value = "/mentor/{id}", produces = Constants.APPLICATION_JSON)
+    public ResponseEntity<MentorDTO> findMentorById(@PathVariable @Min(value = 1, message = "Mentor ID must be a positive integer") Integer id) {
+        final MentorDTO mentor = mentorService.findMentorById(id);
+        return ResponseEntity.ok(mentor);
+    }
+
+    @PutMapping(value = "/mentor", consumes = Constants.APPLICATION_JSON, produces = Constants.APPLICATION_JSON)
+    public ResponseEntity<MentorDTO> updateMentor(@Valid @RequestBody MentorDTO mentorDTO) {
+        final MentorDTO mentor = mentorService.updateMentorById(mentorDTO);
+        return ResponseEntity.ok(mentor);
+    }
+
+    @DeleteMapping(value = "/mentor/{id}", produces = Constants.APPLICATION_JSON)
+    public ResponseEntity<MentorDTO> deleteMentor(@PathVariable @Min(value = 1, message = "Mentor ID must be a positive integer") Integer id) {
+        final MentorDTO mentor = mentorService.deleteMentorById(id);
+        return ResponseEntity.ok(mentor);
     }
 }

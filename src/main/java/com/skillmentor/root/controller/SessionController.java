@@ -1,5 +1,6 @@
 package com.skillmentor.root.controller;
 
+import com.skillmentor.root.common.Constants;
 import com.skillmentor.root.dto.SessionDTO;
 import com.skillmentor.root.dto.SessionLiteDTO;
 import com.skillmentor.root.service.SessionService;
@@ -15,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/session")
+@RequestMapping(value = "/academic")
 public class SessionController {
     @Autowired
     private SessionService sessionService;
-    @PostMapping()
+    @PostMapping(value = "/session", consumes = Constants.APPLICATION_JSON, produces = Constants.APPLICATION_JSON)
     public ResponseEntity<SessionLiteDTO> createSession(@RequestBody SessionLiteDTO sessionDTO){
         final SessionLiteDTO savedDTO = sessionService.createSession(sessionDTO);
         return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping(value = "/session", produces = Constants.APPLICATION_JSON)
     public ResponseEntity<List<SessionDTO>> getAllSessions(){
         final List<SessionDTO> sessionDTOS = sessionService.getAllSessions();
         return new ResponseEntity<>(sessionDTOS, HttpStatus.OK);

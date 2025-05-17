@@ -1,5 +1,6 @@
 package com.skillmentor.root.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -12,43 +13,43 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MentorDTO {
-    @NotNull
     @JsonProperty("mentor_id")
     private Integer mentorId;
-    @NotBlank
+    @NotBlank(message = "First name must not be blank")
     @JsonProperty("first_name")
     private String firstName;
-    @NotBlank
+    @NotBlank(message = "Last name must not be blank")
     @JsonProperty("last_name")
     private String lastName;
-    @NotBlank
+    @NotBlank(message = "Address must not be blank")
     @JsonProperty("address")
     private String address;
-    @Email
-    @NotBlank
+    @Email(message = "Email must be valid")
+    @NotBlank(message = "Email must not be blank")
     @JsonProperty("email")
     private String email;
-    @NotBlank
+    @NotBlank(message = "Title must not be blank")
     @JsonProperty("title")
     private String title;
-    @NotNull
-    @Min(0)
+    @NotNull(message = "Session fee must not be null")
+    @Min(value = 0, message = "Session fee must be zero or positive")
     @JsonProperty("session_fee")
     private Double sessionFee;
-    @NotBlank
+    @NotBlank(message = "Profession must not be blank")
     @JsonProperty("profession")
     private String profession;
-    @NotBlank
+    @NotBlank(message = "Subject must not be blank")
     @JsonProperty("subject")
     private String subject;
-    @NotBlank
+    @NotBlank(message = "Phone number must not be blank")
     @JsonProperty("phone_number")
     private String phoneNumber;
-    @NotBlank
+    @NotBlank(message = "Qualification must not be blank")
     @JsonProperty("qualification")
     private String qualification;
-    @NotNull
+    @NotNull(message = "Classroom ID must not be null")
     @JsonProperty("class_room_id")
     private Integer classRoomId;
 }

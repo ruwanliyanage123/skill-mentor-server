@@ -20,8 +20,8 @@ public class AuditDTOEntityMapper {
         auditDTO.setMentorFirstName(sessionEntity.getMentorEntity().getFirstName());
         auditDTO.setMentorLastName(sessionEntity.getMentorEntity().getLastName());
         auditDTO.setMentorPhoneNumber(sessionEntity.getMentorEntity().getPhoneNumber());
-        auditDTO.setFee(sessionEntity.getClassRoomEntity().getSessionFee());
         auditDTO.setStartTime(sessionEntity.getStartTime());
+        auditDTO.setFee(sessionEntity.getMentorEntity().getSessionFee());
         auditDTO.setEndTime(sessionEntity.getEndTime());
         auditDTO.setTopic(sessionEntity.getTopic());
         return auditDTO;

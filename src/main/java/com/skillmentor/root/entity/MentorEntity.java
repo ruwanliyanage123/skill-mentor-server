@@ -1,14 +1,10 @@
 package com.skillmentor.root.entity;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,36 +22,38 @@ public class MentorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mentor_id")
     private Integer mentorId;
-    @Column(name = "first_name")
+    @NotBlank(message = "First name must not be blank")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-
-    @Column(name = "last_name")
+    @NotBlank(message = "Last name must not be blank")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-
-    @Column(name = "address")
+    @NotBlank(message = "Address must not be blank")
+    @Column(name = "address", nullable = false)
     private String address;
-
-    @Column(name = "email")
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email must not be blank")
+    @Column(name = "email", nullable = false)
     private String email;
-
-    @Column(name = "title")
+    @NotBlank(message = "Title must not be blank")
+    @Column(name = "title", nullable = false)
     private String title;
-
-    @Column(name = "phone_number")
+    @NotBlank(message = "Phone number must not be blank")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-
-    @Column(name = "profession")
+    @NotBlank(message = "Profession must not be blank")
+    @Column(name = "profession", nullable = false)
     private String profession;
-
-    @Column(name = "session_fee")
+    @NotNull(message = "Session fee must not be null")
+    @Min(value = 0, message = "Session fee must be non-negative")
+    @Column(name = "session_fee", nullable = false)
     private Double sessionFee;
-
-    @Column(name = "subject")
+    @NotBlank(message = "Subject must not be blank")
+    @Column(name = "subject", nullable = false)
     private String subject;
-
-    @Column(name = "qualification")
+    @NotBlank(message = "Qualification must not be blank")
+    @Column(name = "qualification", nullable = false)
     private String qualification;
-
     @OneToMany(mappedBy = "mentorEntity", fetch = FetchType.EAGER)
     private List<SessionEntity> sessionEntityList = new ArrayList<>();
 }
