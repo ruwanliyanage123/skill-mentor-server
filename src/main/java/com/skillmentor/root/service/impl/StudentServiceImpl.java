@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class StudentServiceImpl implements StudentService {
     StudentRepository studentRepository;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = {"studentCache", "allStudentsCache"}, allEntries = true)
     public StudentDTO createStudent(final StudentDTO studentDTO) {
         if (studentDTO == null) {
@@ -31,6 +33,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     @Cacheable(value = "allStudentsCache", key = "'allStudents'")
     public List<StudentDTO> getAllStudents(final List<String> addresses, final List<Integer> ages, final List<String> firstNames) {
         final List<StudentEntity> studentEntities = studentRepository.findAll();
@@ -45,6 +48,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Cacheable(value = "studentCache", key = "#id")
+    @Transactional(rollbackFor = Exception.class)
     public StudentDTO findStudentById(final Integer id){
         return studentRepository.findById(id)
                 .map(StudentEntityDTOMapper::map)
@@ -52,8 +56,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    @CachePut(value = "studentCache", key = "#studentDTO.studentId")
+    @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "allStudentsCache", allEntries = true)
+    @CachePut(value = "studentCache", key = "#studentDTO.studentId")
     public StudentDTO updateStudentById(final StudentDTO studentDTO){
         if (studentDTO == null || studentDTO.getStudentId() == null) {
             throw new IllegalArgumentException("Student ID must not be null for update.");
@@ -70,6 +75,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = {"studentCache", "allStudentsCache"}, key = "#id")
     public StudentDTO deleteStudentById(final Integer id){
         final StudentEntity studentEntity = studentRepository.findById(id)
