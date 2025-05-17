@@ -1,130 +1,55 @@
 package com.skillmentor.root.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MentorDTO {
+    @JsonProperty("mentor_id")
     private Integer mentorId;
+    @NotBlank(message = "First name must not be blank")
+    @JsonProperty("first_name")
     private String firstName;
+    @NotBlank(message = "Last name must not be blank")
+    @JsonProperty("last_name")
     private String lastName;
+    @NotBlank(message = "Address must not be blank")
+    @JsonProperty("address")
     private String address;
+    @Email(message = "Email must be valid")
+    @NotBlank(message = "Email must not be blank")
+    @JsonProperty("email")
     private String email;
+    @NotBlank(message = "Title must not be blank")
+    @JsonProperty("title")
     private String title;
+    @NotNull(message = "Session fee must not be null")
+    @Min(value = 0, message = "Session fee must be zero or positive")
+    @JsonProperty("session_fee")
     private Double sessionFee;
+    @NotBlank(message = "Profession must not be blank")
+    @JsonProperty("profession")
     private String profession;
+    @NotBlank(message = "Subject must not be blank")
+    @JsonProperty("subject")
     private String subject;
+    @NotBlank(message = "Phone number must not be blank")
+    @JsonProperty("phone_number")
     private String phoneNumber;
+    @NotBlank(message = "Qualification must not be blank")
+    @JsonProperty("qualification")
     private String qualification;
+    @NotNull(message = "Classroom ID must not be null")
+    @JsonProperty("class_room_id")
     private Integer classRoomId;
-
-    public MentorDTO() {}
-
-    public MentorDTO(Integer mentorId, String firstName, String lastName, String address, String email, String sessionFee,
-                     String title, String profession, String subject, String qualification, Integer classRoomId, String phoneNumber) {
-        this.mentorId = mentorId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-        this.title = title;
-        this.profession = profession;
-        this.subject = subject;
-        this.qualification = qualification;
-        this.classRoomId = classRoomId;
-        this.phoneNumber = phoneNumber;
-        this.sessionFee = Double.parseDouble(sessionFee);
-    }
-
-    public Integer getMentorId() {
-        return mentorId;
-    }
-
-    public void setMentorId(Integer mentorId) {
-        this.mentorId = mentorId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getQualification() {
-        return qualification;
-    }
-
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
-
-    public void setClassRoomId(Integer classRoomId) {
-        this.classRoomId = classRoomId;
-    }
-
-    public Integer getClassRoomId() {
-        return classRoomId;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Double getSessionFee() {
-        return sessionFee;
-    }
-
-    public void setSessionFee(Double sessionFee) {
-        this.sessionFee = sessionFee;
-    }
 }

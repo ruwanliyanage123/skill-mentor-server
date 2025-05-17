@@ -1,169 +1,59 @@
 package com.skillmentor.root.entity;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "mentor")
+@NoArgsConstructor
+@AllArgsConstructor
 public class MentorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mentor_id")
     private Integer mentorId;
-    @Column(name = "first_name")
+    @NotBlank(message = "First name must not be blank")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-
-    @Column(name = "last_name")
+    @NotBlank(message = "Last name must not be blank")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-
-    @Column(name = "address")
+    @NotBlank(message = "Address must not be blank")
+    @Column(name = "address", nullable = false)
     private String address;
-
-    @Column(name = "email")
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email must not be blank")
+    @Column(name = "email", nullable = false)
     private String email;
-
-    @Column(name = "title")
+    @NotBlank(message = "Title must not be blank")
+    @Column(name = "title", nullable = false)
     private String title;
-
-    @Column(name = "phone_number")
+    @NotBlank(message = "Phone number must not be blank")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-
-    @Column(name = "profession")
+    @NotBlank(message = "Profession must not be blank")
+    @Column(name = "profession", nullable = false)
     private String profession;
-
-    @Column(name = "session_fee")
+    @NotNull(message = "Session fee must not be null")
+    @Min(value = 0, message = "Session fee must be non-negative")
+    @Column(name = "session_fee", nullable = false)
     private Double sessionFee;
-
-    @Column(name = "subject")
+    @NotBlank(message = "Subject must not be blank")
+    @Column(name = "subject", nullable = false)
     private String subject;
-
-    @Column(name = "qualification")
+    @NotBlank(message = "Qualification must not be blank")
+    @Column(name = "qualification", nullable = false)
     private String qualification;
-
     @OneToMany(mappedBy = "mentorEntity", fetch = FetchType.EAGER)
     private List<SessionEntity> sessionEntityList = new ArrayList<>();
-
-    public MentorEntity() {}
-
-    public MentorEntity(Integer mentorId, String firstName, String lastName, String address, String email, Double sessionFee,
-                     String title, String profession, String subject, String qualification, List<SessionEntity> sessionEntityList, String phoneNumber) {
-        this.mentorId = mentorId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-        this.title = title;
-        this.profession = profession;
-        this.subject = subject;
-        this.qualification = qualification;
-        this.sessionEntityList = sessionEntityList;
-        this.phoneNumber = phoneNumber;
-        this.sessionFee = sessionFee;
-    }
-
-    public Integer getMentorId() {
-        return mentorId;
-    }
-
-    public void setMentorId(Integer mentorId) {
-        this.mentorId = mentorId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getQualification() {
-        return qualification;
-    }
-
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
-
-    public void setSessionEntityList(List<SessionEntity> sessionEntityList) {
-        this.sessionEntityList = sessionEntityList;
-    }
-
-    public List<SessionEntity> getSessionEntityList() {
-        return sessionEntityList;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Double getSessionFee() {
-        return sessionFee;
-    }
-
-    public void setSessionFee(Double sessionFee) {
-        this.sessionFee = sessionFee;
-    }
 }

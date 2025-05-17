@@ -1,82 +1,36 @@
 package com.skillmentor.root.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.Instant;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SessionDTO {
+    @JsonProperty("session_id")
     private Integer sessionId;
+    @NotNull(message = "Student must not be null")
+    @JsonProperty("student")
     private StudentDTO studentDTO;
+    @NotNull(message = "Classroom must not be null")
+    @JsonProperty("class_room")
     private ClassRoomDTO classRoomDTO;
+    @NotNull(message = "Mentor must not be null")
+    @JsonProperty("mentor")
     private MentorDTO mentorDTO;
+    @NotBlank(message = "Topic must not be blank")
+    @JsonProperty("topic")
     private String topic;
+    @NotNull(message = "Start time must not be null")
+    @JsonProperty("start_time")
     private Instant startTime;
+    @NotNull(message = "End time must not be null")
+    @JsonProperty("end_time")
     private Instant endTime;
-
-    public SessionDTO(Integer sessionId, StudentDTO studentDTO, ClassRoomDTO classRoomDTO, MentorDTO mentorDTO, Instant startTime, Instant endTime, String topic) {
-        this.sessionId = sessionId;
-        this.studentDTO = studentDTO;
-        this.classRoomDTO = classRoomDTO;
-        this.mentorDTO = mentorDTO;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.topic = topic;
-    }
-
-    public SessionDTO(){
-
-    }
-
-    public Integer getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(Integer sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public StudentDTO getStudentDTO() {
-        return studentDTO;
-    }
-
-    public void setStudentDTO(StudentDTO studentDTO) {
-        this.studentDTO = studentDTO;
-    }
-
-    public ClassRoomDTO getClassRoomDTO() {
-        return classRoomDTO;
-    }
-
-    public void setClassRoomDTO(ClassRoomDTO classRoomDTO) {
-        this.classRoomDTO = classRoomDTO;
-    }
-
-    public MentorDTO getMentorDTO() {
-        return mentorDTO;
-    }
-
-    public void setMentorDTO(MentorDTO mentorDTO) {
-        this.mentorDTO = mentorDTO;
-    }
-
-    public Instant getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public Instant getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
 }

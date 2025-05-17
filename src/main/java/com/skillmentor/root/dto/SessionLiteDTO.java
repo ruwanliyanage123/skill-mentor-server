@@ -1,81 +1,38 @@
 package com.skillmentor.root.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.Instant;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SessionLiteDTO {
+    @JsonProperty("session_id")
     private Integer sessionId;
+    @NotNull(message = "Student ID must not be null")
+    @JsonProperty("student_id")
     private Integer studentId;
+    @NotNull(message = "Classroom ID must not be null")
+    @JsonProperty("class_room_id")
     private Integer classRoomId;
+    @NotNull(message = "Mentor ID must not be null")
+    @JsonProperty("mentor_id")
     private Integer mentorId;
-    private String topic;
+    @NotNull(message = "Start time must not be null")
+    @JsonProperty("start_time")
     private Instant startTime;
+    @NotNull(message = "End time must not be null")
+    @JsonProperty("end_time")
     private Instant endTime;
-
-    public SessionLiteDTO(Integer sessionId, Integer studentId, Integer classRoomId, Integer mentorId, Instant startTime, Instant endTime, String topic) {
-        this.sessionId = sessionId;
-        this.studentId = studentId;
-        this.classRoomId = classRoomId;
-        this.mentorId = mentorId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.topic = topic;
-    }
-
-    public SessionLiteDTO(){}
-
-    public Integer getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(Integer sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public Integer getClassRoomId() {
-        return classRoomId;
-    }
-
-    public void setClassRoomId(Integer classRoomId) {
-        this.classRoomId = classRoomId;
-    }
-
-    public Integer getMentorId() {
-        return mentorId;
-    }
-
-    public void setMentorId(Integer mentorId) {
-        this.mentorId = mentorId;
-    }
-
-    public Instant getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public Instant getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+    @NotBlank(message = "Topic must not be blank")
+    @JsonProperty("topic")
+    private String topic;
 }

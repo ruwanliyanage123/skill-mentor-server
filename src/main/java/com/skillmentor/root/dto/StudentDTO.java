@@ -1,82 +1,38 @@
 package com.skillmentor.root.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StudentDTO {
+    @JsonProperty("student_id")
     private Integer studentId;
+    @NotBlank(message = "First name must not be blank")
+    @JsonProperty("first_name")
     private String firstName;
+    @NotBlank(message = "Last name must not be blank")
+    @JsonProperty("last_name")
     private String lastName;
+    @NotBlank(message = "Email must not be blank")
+    @JsonProperty("email")
     private String email;
+    @NotBlank(message = "Phone number must not be blank")
+    @JsonProperty("phone_number")
     private String phoneNumber;
+    @NotBlank(message = "Address must not be blank")
+    @JsonProperty("address")
     private String address;
+    @NotNull(message = "Age must not be null")
+    @Min(value = 18, message = "Age must be at least 18")
+    @JsonProperty("age")
     private Integer age;
-
-    public StudentDTO(Integer studentId, String firstName, String lastName, String email, String phoneNumber, String address, Integer age) {
-        this.studentId = studentId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.age = age;
-    }
-
-    public StudentDTO() {
-
-    }
-
-    public Integer getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Integer studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return this.address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getAge() {
-        return this.age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 }
-

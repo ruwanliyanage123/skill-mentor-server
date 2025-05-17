@@ -1,6 +1,7 @@
 package com.skillmentor.root.service;
 
 import com.skillmentor.root.dto.MentorDTO;
+import com.skillmentor.root.exception.MentorException;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface MentorService {
      * @param mentorDTO the data transfer object containing mentor details
      * @return the created MentorDTO object
      */
-    MentorDTO createMentor(MentorDTO mentorDTO);
+    MentorDTO createMentor(MentorDTO mentorDTO) throws MentorException;
 
     /**
      * Retrieves all mentors.
@@ -30,7 +31,7 @@ public interface MentorService {
      * @param id the ID of the mentor to retrieve
      * @return a MentorDTO object representing the mentor
      */
-    MentorDTO getMentorById(Integer id);
+    MentorDTO findMentorById(Integer id) throws MentorException;
 
     /**
      * Updates an existing mentor's details.
@@ -38,7 +39,7 @@ public interface MentorService {
      * @param mentorDTO the data transfer object containing updated mentor details
      * @return a MentorDTO object representing the updated mentor
      */
-    MentorDTO updateMentorById(MentorDTO mentorDTO);
+    MentorDTO updateMentorById(MentorDTO mentorDTO) throws MentorException;
 
     /**
      * Deletes a mentor by their ID.
@@ -46,5 +47,5 @@ public interface MentorService {
      * @param id the ID of the mentor to delete
      * @return a MentorDTO object representing the deleted mentor
      */
-    MentorDTO deleteMentorById(Integer id);
+    MentorDTO deleteMentorById(Integer id) throws MentorException;
 }
