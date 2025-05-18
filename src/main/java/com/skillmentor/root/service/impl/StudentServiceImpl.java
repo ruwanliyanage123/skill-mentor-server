@@ -8,6 +8,7 @@ import com.skillmentor.root.repository.StudentRepository;
 import com.skillmentor.root.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,6 +20,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class StudentServiceImpl implements StudentService {
+    @Value("${spring.datasource.url}")
+    private String datasource;
 
     @Autowired
     StudentRepository studentRepository;
@@ -35,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
         log.debug("StudentDTO received: {}", studentDTO);
         final StudentEntity studentEntity = StudentEntityDTOMapper.map(studentDTO);
         final StudentEntity savedEntity = studentRepository.save(studentEntity);
-        log.info("Student created with ID: {}", savedEntity.getStudentId());
+        log.info("Student created with ID: {} at data-source: {}", savedEntity.getStudentId(), this.datasource);
         return StudentEntityDTOMapper.map(savedEntity);
     }
 
@@ -52,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
                 .filter(student -> firstNames == null || firstNames.contains(student.getFirstName()))
                 .map(StudentEntityDTOMapper::map)
                 .toList();
-        log.info("Found {} students after filtering", result.size());
+        log.info("Found {} students after filtering from data-source: {}", result.size(), this.datasource);
         return result;
     }
 
@@ -67,7 +70,7 @@ public class StudentServiceImpl implements StudentService {
                     return StudentEntityDTOMapper.map(student);
                 })
                 .orElseThrow(() -> {
-                    log.error("Student not found with ID: {}", id);
+                    log.error("Student not found with ID: {} from data-source:{}", id, this.datasource);
                     return new StudentException("Student not found with ID: " + id);
                 });
     }
