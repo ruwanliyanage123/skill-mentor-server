@@ -9,9 +9,10 @@ Actuators
  - Info  : http://localhost:8080/api/v1/actuator/info
 
 #for macOS/Linux
-export GOOGLE_APPLICATION_CREDENTIALS="/path/to/firebase-service-account.json"
-export SUPABASE_DB_HOST="database host"
-export SUPABASE_DB_PORT="database port"
-export SUPABASE_DB_NAME="database name"
-export SUPABASE_DB_USER="database user"
-export SUPABASE_DB_PASSWORD="database host"
+export DATABASE_HOST=</br>
+export DATABASE_PORT=</br>
+export DATABASE_NAME=</br>
+export DATABASE_USER=</br>
+export DATABASE_PASSWORD=
+
+mysql -h 'database host' -P 'database port' -u 'username' -p
