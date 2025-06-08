@@ -28,8 +28,13 @@ import java.util.List;
 @Tag(name = "Student Management", description = "APIs for managing students")
 public class StudentController {
 
-    @Autowired
+
     private StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @Operation(summary = "Create a new student", description = "Accepts a student JSON and creates a new student record")
     @ApiResponses(value = {
