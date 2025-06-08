@@ -38,7 +38,7 @@ public class ClassroomController {
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @PostMapping(value = "/classroom", consumes = Constants.APPLICATION_JSON, produces = Constants.APPLICATION_JSON)
     public ResponseEntity<ClassRoomDTO> createClassroom(
             @Parameter(description = "Classroom details to create", required = true)
@@ -53,7 +53,7 @@ public class ClassroomController {
             @ApiResponse(responseCode = "404", description = "No classrooms found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @GetMapping(value = "/classroom", produces = Constants.APPLICATION_JSON)
     public ResponseEntity<List<ClassRoomDTO>> getAllClassrooms() {
         final List<ClassRoomDTO> classroomDTOS = classroomService.getAllClassRooms();
@@ -67,7 +67,7 @@ public class ClassroomController {
             @ApiResponse(responseCode = "404", description = "Classroom not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @GetMapping(value = "/classroom/{id}", produces = Constants.APPLICATION_JSON)
     public ResponseEntity<ClassRoomDTO> findClassroomById(
             @Parameter(description = "ID of the classroom to retrieve", required = true)
@@ -83,7 +83,7 @@ public class ClassroomController {
             @ApiResponse(responseCode = "404", description = "Classroom not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @PutMapping(value = "/classroom", consumes = Constants.APPLICATION_JSON, produces = Constants.APPLICATION_JSON)
     public ResponseEntity<ClassRoomDTO> updateClassroom(
             @Parameter(description = "Classroom details to update", required = true)
@@ -99,7 +99,7 @@ public class ClassroomController {
             @ApiResponse(responseCode = "404", description = "Classroom not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @DeleteMapping(value = "/classroom/{id}", produces = Constants.APPLICATION_JSON)
     public ResponseEntity<ClassRoomDTO> deleteClassroom(
             @Parameter(description = "ID of the classroom to delete", required = true)
