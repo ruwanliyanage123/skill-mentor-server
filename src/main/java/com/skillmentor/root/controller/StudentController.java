@@ -28,8 +28,13 @@ import java.util.List;
 @Tag(name = "Student Management", description = "APIs for managing students")
 public class StudentController {
 
-    @Autowired
+
     private StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @Operation(summary = "Create a new student", description = "Accepts a student JSON and creates a new student record")
     @ApiResponses(value = {
@@ -45,6 +50,7 @@ public class StudentController {
             @Parameter(description = "Student details to create", required = true)
             @RequestBody @Valid StudentDTO studentDTO) {
         final StudentDTO savedDTO = studentService.createStudent(studentDTO);
+        log.info("Create Student......");
         return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
@@ -62,6 +68,7 @@ public class StudentController {
             @Parameter(description = "Filter by first name") @RequestParam(required = false) List<String> firstNames
     ) {
         final List<StudentDTO> studentDTOS = studentService.getAllStudents(addresses, ages, firstNames);
+        log.info("Get All Students......");
         return new ResponseEntity<>(studentDTOS, HttpStatus.OK);
     }
 
@@ -79,6 +86,7 @@ public class StudentController {
             @PathVariable @Min(0) Integer id
     ) throws StudentException {
         final StudentDTO student = studentService.findStudentById(id);
+        log.info("Find Student id:"+ id + "from server......");
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
