@@ -28,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {"studentCache", "allStudentsCache"}, allEntries = true)
+//    @CacheEvict(value = {"studentCache", "allStudentsCache"}, allEntries = true)
     public StudentDTO createStudent(final StudentDTO studentDTO) {
         log.info("Creating new student...");
         if (studentDTO == null) {
@@ -44,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @Cacheable(value = "allStudentsCache", key = "'allStudents'")
+//    @Cacheable(value = "allStudentsCache", key = "'allStudents'")
     public List<StudentDTO> getAllStudents(final List<String> addresses, final List<Integer> ages, final List<String> firstNames) {
         log.info("Fetching all students with filters: addresses={}, ages={}, firstNames={}", addresses, ages, firstNames);
         final List<StudentEntity> studentEntities = studentRepository.findAll();
@@ -60,7 +60,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    @Cacheable(value = "studentCache", key = "#id")
+//    @Cacheable(value = "studentCache", key = "#id")
     @Transactional(rollbackFor = Exception.class)
     public StudentDTO findStudentById(final Integer id) {
         log.info("Fetching student by ID: {}", id);
@@ -77,8 +77,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = "allStudentsCache", allEntries = true)
-    @CachePut(value = "studentCache", key = "#studentDTO.studentId")
+//    @CacheEvict(value = "allStudentsCache", allEntries = true)
+//    @CachePut(value = "studentCache", key = "#studentDTO.studentId")
     public StudentDTO updateStudentById(final StudentDTO studentDTO) {
         log.info("Updating student...");
         if (studentDTO == null || studentDTO.getStudentId() == null) {
@@ -104,7 +104,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {"studentCache", "allStudentsCache"}, key = "#id")
+//    @CacheEvict(value = {"studentCache", "allStudentsCache"}, key = "#id")
     public StudentDTO deleteStudentById(final Integer id) {
         log.info("Deleting student with ID: {}", id);
         final StudentEntity studentEntity = studentRepository.findById(id)

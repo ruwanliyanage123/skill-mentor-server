@@ -13,7 +13,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuditDTO {
-    @JsonProperty("session_id")
+
     private Integer sessionId;
     @NotNull(message = "Student ID must not be null")
     @JsonProperty("student_id")

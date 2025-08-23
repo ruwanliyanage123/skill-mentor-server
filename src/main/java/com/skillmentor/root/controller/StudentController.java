@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,13 @@ import java.util.List;
 @Tag(name = "Student Management", description = "APIs for managing students")
 public class StudentController {
 
-    @Autowired
+
     private StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @Operation(summary = "Create a new student", description = "Accepts a student JSON and creates a new student record")
     @ApiResponses(value = {
@@ -38,11 +44,13 @@ public class StudentController {
             @ApiResponse(responseCode = "403", description = "Forbidden"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @PostMapping(value = "/student", consumes = Constants.APPLICATION_JSON, produces = Constants.APPLICATION_JSON)
     public ResponseEntity<StudentDTO> createStudent(
             @Parameter(description = "Student details to create", required = true)
             @RequestBody @Valid StudentDTO studentDTO) {
         final StudentDTO savedDTO = studentService.createStudent(studentDTO);
+        log.info("Create Student......");
         return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
@@ -52,6 +60,7 @@ public class StudentController {
             @ApiResponse(responseCode = "404", description = "No students found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @GetMapping(value = "/student", produces = Constants.APPLICATION_JSON)
     public ResponseEntity<List<StudentDTO>> getAllStudents(
             @Parameter(description = "Filter by address") @RequestParam(required = false) List<String> addresses,
@@ -59,6 +68,7 @@ public class StudentController {
             @Parameter(description = "Filter by first name") @RequestParam(required = false) List<String> firstNames
     ) {
         final List<StudentDTO> studentDTOS = studentService.getAllStudents(addresses, ages, firstNames);
+        log.info("Get All Students......");
         return new ResponseEntity<>(studentDTOS, HttpStatus.OK);
     }
 
@@ -69,12 +79,14 @@ public class StudentController {
             @ApiResponse(responseCode = "404", description = "Student not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @GetMapping(value = "/student/{id}", produces = Constants.APPLICATION_JSON)
     public ResponseEntity<StudentDTO> findStudentById(
             @Parameter(description = "ID of the student to fetch", required = true)
             @PathVariable @Min(0) Integer id
     ) throws StudentException {
         final StudentDTO student = studentService.findStudentById(id);
+        log.info("Find Student id:"+ id + "from server......");
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
@@ -85,6 +97,7 @@ public class StudentController {
             @ApiResponse(responseCode = "404", description = "Student not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @PutMapping(value = "/student", consumes = Constants.APPLICATION_JSON, produces = Constants.APPLICATION_JSON)
     public ResponseEntity<StudentDTO> updateStudent(
             @Parameter(description = "Student data to update", required = true)
@@ -101,6 +114,7 @@ public class StudentController {
             @ApiResponse(responseCode = "404", description = "Student not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @PreAuthorize(Constants.ADMIN_ROLE_PERMISSION)
     @DeleteMapping(value = "/student/{id}", produces = Constants.APPLICATION_JSON)
     public ResponseEntity<StudentDTO> deleteStudent(
             @Parameter(description = "ID of the student to delete", required = true)
