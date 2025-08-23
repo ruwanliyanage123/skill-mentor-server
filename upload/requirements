@@ -1,0 +1,438 @@
+Good programming practice – candidates must exhibit and exercise Best Coding Practices. Architect may disqualified correct answer if they found that candidates does not have a good habit
+best practises
+
+do the demo assesment
+check the original assessment before do it
+check what happens when accidently browser closed
+how to make optimize and scalable 
+try to open the 3 questions in threee tabs
+don't wait to compile and run the code until the end. write-> compile -> test->write(better to extract the sub logics to the methods)
+
+understand the question in quickly
+organize the answer
+how to use optimacally the idea
+can i use the AI? if i can how i can use it?
+write the test cases and start to write
+sorting nathi array dei, maximum eka ara ganna
+
+
+
+
+Q)
+A binary gap within a positive integer N is any maximal sequence of consecutive zeros that is surrounded by ones at both ends in the binary representation of N.
+
+For example, number 9 has binary representation 1001 and contains a binary gap of length 2. The number 529 has binary representation 1000010001 and contains two binary gaps: one of length 4 and one of length 3. The number 20 has binary representation 10100 and contains one binary gap of length 1. The number 15 has binary representation 1111 and has no binary gaps. The number 32 has binary representation 100000 and has no binary gaps.
+
+
+My answer
+
+
+class Solution {
+    private final StringBuilder builder = new StringBuilder();
+
+    public int solution(int N) {
+        convertBinaryString(N);
+        int result = countMaximumConsecutiveZeros(builder.reverse().toString());
+        return result;
+    }
+
+    public int convertBinaryString(int N){
+        if(N == 1){
+            builder.append(1);
+            return 1;
+        }
+        int remain = N % 2;
+        builder.append(remain);
+        return convertBinaryString(N/2);
+    }
+
+    private int countMaximumConsecutiveZeros(String number){
+        int maximuCount = 0;
+        int inprogressCount = 0;
+        boolean countStarted = false;
+        boolean zeroFound = false;
+        for(int i=0; i<number.length(); i++){
+            if(number.charAt(i) == '1' && inprogressCount==0){
+                countStarted = true;
+                continue;
+            }
+            if(number.charAt(i) == '0' && countStarted){
+                inprogressCount ++;
+                zeroFound = true;
+            }
+            if(number.charAt(i) == '1' && inprogressCount>0 && zeroFound){
+                countStarted = false;
+                zeroFound = false;
+                if(maximuCount < inprogressCount){
+                    maximuCount = inprogressCount;
+                }
+                inprogressCount = 0;
+            }
+
+        }
+        return maximuCount;
+    }
+}
+
+
+Answer
+
+public int solution(int N) {
+    String binary = Integer.toBinaryString(N);
+    int maxGap = 0;
+    int currentGap = -1;
+
+    for (char c : binary.toCharArray()) {
+        if (c == '1') {
+            if (currentGap > maxGap) {
+                maxGap = currentGap;
+            }
+            currentGap = 0; // start counting for next potential gap
+        } else if (currentGap >= 0) {
+            currentGap++; // count zeros only after a '1'
+        }
+    }
+    return maxGap;
+}
+
+
+-----------------------------------------------------------------------------------------------------
+
+An array A consisting of N integers is given. Rotation of the array means that each element is shifted right by one index, and the last element of the array is moved to the first place. For example, the rotation of array A = [3, 8, 9, 7, 6] is [6, 3, 8, 9, 7] (elements are shifted right by one index and 6 is moved to the first place).
+
+The goal is to rotate array A K times; that is, each element of A will be shifted to the right K times.
+
+Write a function:
+
+class Solution { public int[] solution(int[] A, int K); }
+
+that, given an array A consisting of N integers and an integer K, returns the array A rotated K times.
+
+For example, given
+
+
+class Solution {
+    public int[] solution(int[] A, int K) {
+        int N = A.length;
+        if (N == 0 || K % N == 0) {
+            return A;
+        }
+
+        int[] rotated = new int[N];
+        K = K % N; // handle rotations larger than array size
+
+        for (int i = 0; i < N; i++) {
+            rotated[(i + K) % N] = A[i];
+        }
+
+        return rotated;
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------
+
+Task description
+A non-empty array A consisting of N integers is given. Array A represents numbers on a tape.
+
+Any integer P, such that 0 < P < N, splits this tape into two non-empty parts: A[0], A[1], ..., A[P − 1] and A[P], A[P + 1], ..., A[N − 1].
+
+The difference between the two parts is the value of: |(A[0] + A[1] + ... + A[P − 1]) − (A[P] + A[P + 1] + ... + A[N − 1])|
+
+In other words, it is the absolute difference between the sum of the first part and the sum of the second part.
+
+For example, consider array A such that:
+
+  A[0] = 3
+  A[1] = 1
+  A[2] = 2
+  A[3] = 4
+  A[4] = 3
+We can split this tape in four places:
+
+P = 1, difference = |3 − 10| = 7
+P = 2, difference = |4 − 9| = 5
+P = 3, difference = |6 − 7| = 1
+P = 4, difference = |10 − 3| = 7
+
+
+class Solution {
+    public int solution(int[] A) {
+        int totalSum = 0;
+        for (int num : A) {
+            totalSum += num;
+        }
+
+        int minDiff = Integer.MAX_VALUE;
+        int leftSum = 0;
+
+        // Try all split points from P = 1 to P = N - 1
+        for (int i = 0; i < A.length - 1; i++) {
+            leftSum += A[i];
+            int rightSum = totalSum - leftSum;
+            int diff = Math.abs(leftSum - rightSum);
+            minDiff = Math.min(minDiff, diff);
+        }
+
+        return minDiff;
+    }
+}
+-----------------------------------------------------------------------------------------------------
+A small frog wants to get to the other side of a river. The frog is initially located on one bank of the river (position 0) and wants to get to the opposite bank (position X+1). Leaves fall from a tree onto the surface of the river.
+
+You are given an array A consisting of N integers representing the falling leaves. A[K] represents the position where one leaf falls at time K, measured in seconds.
+
+The goal is to find the earliest time when the frog can jump to the other side of the river. The frog can cross only when leaves appear at every position across the river from 1 to X (that is, we want to find the earliest moment when all the positions from 1 to X are covered by leaves). You may assume that the speed of the current in the river is negligibly small, i.e. the leaves do not change their positions once they fall in the river.
+
+For example, you are given integer X = 5 and array A such that:
+
+  A[0] = 1
+  A[1] = 3
+  A[2] = 1
+  A[3] = 4
+  A[4] = 2
+  A[5] = 3
+  A[6] = 5
+  A[7] = 4
+In second 6, a leaf falls into position 5. This is the earliest time when leaves appear in every position across the river.
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+A small frog wants to get to the other side of a river. The frog is initially located on one bank of the river (position 0) and wants to get to the opposite bank (position X+1). Leaves fall from a tree onto the surface of the river.
+
+You are given an array A consisting of N integers representing the falling leaves. A[K] represents the position where one leaf falls at time K, measured in seconds.
+
+The goal is to find the earliest time when the frog can jump to the other side of the river. The frog can cross only when leaves appear at every position across the river from 1 to X (that is, we want to find the earliest moment when all the positions from 1 to X are covered by leaves). You may assume that the speed of the current in the river is negligibly small, i.e. the leaves do not change their positions once they fall in the river.
+
+For example, you are given integer X = 5 and array A such that:
+
+  A[0] = 1
+  A[1] = 3
+  A[2] = 1
+  A[3] = 4
+  A[4] = 2
+  A[5] = 3
+  A[6] = 5
+  A[7] = 4
+In second 6, a leaf falls into position 5. This is the earliest time when leaves appear in every position across the river.
+
+
+import java.util.HashSet;
+import java.util.Set;
+
+
+class Solution {
+    public int solution(int X, int[] A) {
+        Set<Integer> fallLeavePoisitions = new HashSet<>();
+        for(int i=0; i<A.length; i++){
+            fallLeavePoisitions.add(A[i]);
+            if(fallLeavePoisitions.size() == X){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------
+A non-empty array A consisting of N integers is given.
+
+A permutation is a sequence containing each element from 1 to N once, and only once.
+
+For example, array A such that:
+
+    A[0] = 4
+    A[1] = 1
+    A[2] = 3
+    A[3] = 2
+is a permutation, but array A such that:
+
+    A[0] = 4
+    A[1] = 1
+    A[2] = 3
+is not a permutation, because value 2 is missing.
+
+The goal is to check whether array A is a permutation.
+
+Write a function:
+
+class Solution { public int solution(int[] A); }
+
+that, given an array A, returns 1 if array A is a permutation and 0 if it is not.
+
+For example, given array A such that:
+
+    A[0] = 4
+    A[1] = 1
+    A[2] = 3
+    A[3] = 2
+the function should return 1.
+
+Given array A such that:
+
+    A[0] = 4
+    A[1] = 1
+    A[2] = 3
+the function should return 0.
+
+Write an efficient algorithm for the following assumptions:
+
+N is an integer within the range [1..100,000];
+each element of array A is an integer within the range [1..1,000,000,000
+
+
+import java.util.Set;
+import java.util.HashSet;
+
+class Solution {
+    public int solution(int[] A) {
+        Set<Integer> unique = new HashSet<>();
+        for(int i=0; i<A.length; i++){
+            if(A[i] < 1 || A.length < A[i]){
+                return 0;
+            }
+            if(!unique.add(A[i])){
+                return 0;
+            }
+        }
+        return 1;
+    }
+}
+-----------------------------------------------------------------------------------------------------
+This is a demo task.
+
+Write a function:
+
+class Solution { public int solution(int[] A); }
+
+that, given an array A of N integers, returns the smallest positive integer (greater than 0) that does not occur in A.
+
+For example, given A = [1, 3, 6, 4, 1, 2], the function should return 5.
+
+Given A = [1, 2, 3], the function should return 4.
+
+Given A = [−1, −3], the function should return 1.
+
+Write an efficient algorithm for the following assumptions:
+
+N is an integer within the range [1..100,000];
+each element of array A is an integer within the range [−1,000,000..1,000,000].
+Copyright 2009–2025 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
+
+
+
+class Solution {
+    public int solution(int[] A) {
+        int N = A.length;
+        boolean[] seen = new boolean[N + 1]; // index 0 to N
+
+        for (int num : A) {
+            if (num > 0 && num <= N) {
+                seen[num] = true;
+            }
+        }
+
+        for (int i = 1; i <= N; i++) {
+            if (!seen[i]) {
+                return i; // the first missing positive number
+            }
+        }
+
+        return N + 1; // all 1..N are present
+    }
+}
+-----------------------------------------------------------------------------------------------------
+
+
+class Solution {
+    public int solution(int[] A) {
+        int countEast = 0;
+        int passingCars = 0;
+
+        for (int car : A) {
+            if (car == 0) {
+                countEast++; // car going east
+            } else if (car == 1) {
+                passingCars += countEast; // car going west; count all east cars before it
+                if (passingCars > 1_000_000_000) {
+                    return -1;
+                }
+            }
+        }
+
+        return passingCars;
+    }
+
+-----------------------------------------------------------------------------------------------------
+
+A non-empty array A consisting of N integers is given. The consecutive elements of array A represent consecutive cars on a road.
+
+Array A contains only 0s and/or 1s:
+
+0 represents a car traveling east,
+1 represents a car traveling west.
+The goal is to count passing cars. We say that a pair of cars (P, Q), where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
+
+For example, consider array A such that:
+
+  A[0] = 0
+  A[1] = 1
+  A[2] = 0
+  A[3] = 1
+  A[4] = 1
+We have five pairs of passing cars: (0, 1), (0, 3), (0, 4), (2, 3), (2, 4).
+
+Write a function:
+
+class Solution { public int solution(int[] A); }
+
+that, given a non-empty array A of N integers, returns the number of pairs of passing cars.
+
+The function should return −1 if the number of pairs of passing cars exceeds 1,000,000,000.
+
+For example, given:
+
+  A[0] = 0
+  A[1] = 1
+  A[2] = 0
+  A[3] = 1
+  A[4] = 1
+the function should return 5, as explained above.
+
+Write an efficient algorithm for the following assumptions:
+
+N is an integer within the range [1..100,000];
+each element of array A is an integer that can have one of the following values: 0, 1
+
+-----------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------
+
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
